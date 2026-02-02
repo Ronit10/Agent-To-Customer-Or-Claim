@@ -1,241 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Insurance Agent Portal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>INSURED – Smart Insurance Solutions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
-    }
+<!-- Salesforce Encoding -->
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px;
-    }
+<style>
+:root{
+    --primary:#0a5cff;
+    --secondary:#00c2ff;
+    --bg:#f4f7ff;
+    --glass:rgba(255,255,255,0.92);
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
 
-    .subtitle {
-      text-align: center;
-      color: #ddd;
-      margin-bottom: 40px;
-    }
+body{
+    background:#f4f7fb;
+}
 
-    .cards {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
+/* ================= NAVBAR ================= */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 60px;
+    background:#fff;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
 
-    .card {
-      background: #ffffff;
-      color: #333;
-      width: 300px;
-      padding: 30px;
-      border-radius: 12px;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
-    }
+.navbar h2{
+    color:var(--primary);
+}
 
-    .card:hover {
-      transform: translateY(-10px);
-    }
+.navbar ul{
+    list-style:none;
+    display:flex;
+    gap:30px;
+}
 
-    .hidden {
-      display: none;
-    }
+.navbar ul li{
+    cursor:pointer;
+    font-weight:600;
+    color:#444;
+}
 
-    .form-container {
-      background: #fff;
-      color: #333;
-      padding: 30px;
-      border-radius: 10px;
-      margin-top: 40px;
-    }
+/* ================= HERO ================= */
+.hero{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    padding:70px 80px;
+    align-items:center;
+}
 
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: bold;
-    }
+.hero h1{
+    font-size:50px;
+    color:#222;
+}
 
-    input, select, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
+.hero span{
+    color:var(--primary);
+}
 
-    input[type="submit"] {
-      margin-top: 20px;
-      background: #2c5364;
-      color: #fff;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      padding: 12px;
-      border-radius: 6px;
-    }
+.hero p{
+    margin-top:15px;
+    font-size:18px;
+    color:#555;
+}
 
-    input[type="submit"]:hover {
-      background: #203a43;
-    }
+.hero img{
+    width:100%;
+    border-radius:20px;
+}
 
-    .back-btn {
-      margin-top: 20px;
-      display: inline-block;
-      color: #2c5364;
-      cursor: pointer;
-      font-weight: bold;
-    }
-  </style>
+/* ================= PRODUCTS ================= */
+.products{
+    padding:40px 80px;
+}
 
-  <script>
-    function showCustomerForm() {
-      document.getElementById("home").classList.add("hidden");
-      document.getElementById("customerForm").classList.remove("hidden");
-    }
+.products h2{
+    margin-bottom:25px;
+    color:#222;
+}
 
-    function showHome() {
-      document.getElementById("customerForm").classList.add("hidden");
-      document.getElementById("home").classList.remove("hidden");
-    }
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:25px;
+}
 
-    function claimAlert() {
-      alert("Claim Request will be handled using Web-to-Case in Salesforce 🚀");
-    }
+.product{
+    background:#fff;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    transition:.3s;
+}
 
-    function validateForm() {
+.product:hover{
+    transform:translateY(-10px);
+}
 
-      let phone = document.getElementById("phone").value.trim();
-      let aadhar = document.getElementById("aadhar").value.trim();
-      let pan = document.getElementById("pan").value.trim();
-      let policy = document.getElementById("policy").value;
+.product h4{
+    margin-top:10px;
+    color:#333;
+}
 
-      let phoneRegex = /^[6-9]\d{9}$/;
-      let aadharRegex = /^\d{4}-\d{4}-\d{4}$/;
-      let panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+/* ================= YOUR ORIGINAL CONTAINER ================= */
+.container{
+    width:90%;
+    max-width:1100px;
+    background:var(--glass);
+    border-radius:20px;
+    padding:40px;
+    margin:60px auto;
+    box-shadow:0 25px 50px rgba(0,0,0,0.2);
+    text-align:center;
+}
 
-      if (!phoneRegex.test(phone)) {
-        alert("Phone number must be exactly 10 digits and start with 6-9");
-        return false;
-      }
+header{
+    margin-bottom:40px;
+}
 
-      if (!aadharRegex.test(aadhar)) {
-        alert("Aadhar must be in format 1242-5678-9876");
-        return false;
-      }
+header h1{
+    font-size:42px;
+    color:var(--primary);
+}
 
-      if (!panRegex.test(pan)) {
-        alert("PAN must be in format ABCDE1234F (CAPITAL letters only)");
-        return false;
-      }
+header p{
+    color:#555;
+    margin-top:10px;
+    font-size:18px;
+}
 
-      if (policy === "") {
-        alert("Please select a Policy Type");
-        return false;
-      }
+.actions{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    margin-top:40px;
+}
 
-      return true;
-    }
-  </script>
+.card{
+    width:300px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    cursor:pointer;
+    transition:0.4s;
+    box-shadow:0 15px 30px rgba(0,0,0,0.15);
+}
+
+.card:hover{
+    transform:translateY(-15px) scale(1.03);
+}
+
+.card h2{
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#555;
+}
+
+/* ================= MODAL ================= */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:10;
+}
+
+.modal-content{
+    background:white;
+    width:90%;
+    max-width:800px;
+    max-height:90vh;
+    overflow:auto;
+    padding:30px;
+    border-radius:20px;
+}
+
+.modal h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:var(--primary);
+}
+
+.close{
+    float:right;
+    font-size:22px;
+    cursor:pointer;
+}
+
+form label{
+    font-weight:600;
+}
+
+form input, form select{
+    width:100%;
+    padding:10px;
+    margin:8px 0 15px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+form input[type="submit"]{
+    background:var(--primary);
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+}
+
+form input[type="submit"]:hover{
+    background:#003fc4;
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
-
-  <!-- HOME -->
-  <div id="home">
-    <h1>Insurance Agent Portal</h1>
-    <p class="subtitle">Create Customers & Manage Claims</p>
-
-    <div class="cards">
-      <div class="card" onclick="showCustomerForm()">
-        <h2>➕ Create New Customer</h2>
-        <p>Register customer via Salesforce Web-to-Lead</p>
-      </div>
-
-      <div class="card" onclick="claimAlert()">
-        <h2>📝 Claim Request</h2>
-        <p>Raise insurance claim requests</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- CUSTOMER FORM -->
-  <div id="customerForm" class="hidden">
-    <div class="form-container">
-
-      <h2>Create New Customer</h2>
-
-      <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dfj00000JEsC5"
-            method="POST"
-            onsubmit="return validateForm();">
-
-        <input type="hidden" name="oid" value="00Dfj00000JEsC5">
-        <input type="hidden" name="retURL" value="http://google.com">
-
-        <label>First Name</label>
-        <input name="first_name" required>
-
-        <label>Last Name</label>
-        <input name="last_name" required>
-
-        <label>Email</label>
-        <input name="email" type="email" required>
-
-        <label>Phone</label>
-        <input id="phone" name="phone" maxlength="10" required>
-
-        <label>City</label>
-        <input name="city">
-
-        <label>Street</label>
-        <textarea name="street"></textarea>
-
-        <label>Zip</label>
-        <input name="zip">
-
-        <label>Policy Type</label>
-        <select id="policy" name="00Nfj000037OKjC" required>
-          <option value="">--None--</option>
-          <option value="Vehicel">Vehicle</option>
-          <option value="Health">Health</option>
-          <option value="Property">Property</option>
-        </select>
-
-        <label>Agent Email</label>
-        <input name="00Nfj000037O18h" type="email">
-
-        <label>Aadhar Card</label>
-        <input id="aadhar" name="00Nfj000037OlUr" placeholder="1242-5678-9876" required>
-
-        <label>PAN Card</label>
-        <input id="pan" name="00Nfj000037OYiw" placeholder="ABCDE1234F" required>
-
-        <input type="submit" value="Submit to Salesforce">
-      </form>
-
-      <div class="back-btn" onclick="showHome()">⬅ Back to Home</div>
-
-    </div>
-  </div>
-
+<!-- ================= NAVBAR ================= -->
+<div class="navbar">
+    <h2>INSURED</h2>
+    <ul>
+        <li>Insurance Products</li>
+        <li>Renew Policy</li>
+        <li>Claim</li>
+        <li>Support</li>
+    </ul>
 </div>
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+    <div>
+        <h1>Let's find you the <span>Best Insurance</span></h1>
+        <p>Compare Health, Vehicle & Property Insurance from top insurers</p>
+    </div>
+    <img src="https://www.insurancecentermo.com/wp-content/uploads/2019/10/07-ask-about-discounts.png" alt="Insurance Banner">
+</div>
+
+<!-- ================= PRODUCTS ================= -->
+<div class="products">
+    <h2>Popular Insurance Products</h2>
+    <div class="product-grid">
+        <div class="product"><h4>Health Insurance</h4></div>
+        <div class="product"><h4>Car Insurance</h4></div>
+        <div class="product"><h4>Bike Insurance</h4></div>
+        <div class="product"><h4>Home Insurance</h4></div>
+        <div class="product"><h4>Travel Insurance</h4></div>
+        <div class="product"><h4>Term Life Insurance</h4></div>
+    </div>
+</div>
+
+<!-- ================= YOUR ORIGINAL FEATURE ================= -->
+<div class="container">
+<header>
+    <h1>INSURED</h1>
+    <p>Your trusted partner for Health, Vehicle & Property Insurance</p>
+</header>
+
+<div class="actions">
+    <div class="card" onclick="openModal('leadModal')">
+        <h2>Raise a Query</h2>
+        <p>Get expert guidance & policy consultation</p>
+    </div>
+
+    <div class="card" onclick="openModal('caseModal')">
+        <h2>Apply for Claim</h2>
+        <p>Quick & hassle-free claim request</p>
+    </div>
+</div>
+</div>
+
+<!-- ================== WEB TO LEAD ================== -->
+<div class="modal" id="leadModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('leadModal')">&times;</span>
+<h2>Insurance Query Form</h2>
+
+<form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dfj00000JEsC5"
+method="POST">
+
+<input type="hidden" name="oid" value="00Dfj00000JEsC5">
+<input type="hidden" name="retURL" value="http://agent-to-customer-or-claim.onrender.com/">
+
+<label>First Name</label>
+<input name="first_name" required pattern="[A-Za-z ]{2,}">
+
+<label>Last Name</label>
+<input name="last_name" required pattern="[A-Za-z ]{2,}">
+
+<label>Email</label>
+<input name="email" type="email" required>
+
+<label>Phone</label>
+<input name="phone" required pattern="[0-9]{10}">
+
+<label>Date of Birth</label>
+<input name="00Nfj000037OfxL" type="date" required>
+
+<label>Annual Income</label>
+<input name="00Nfj000037TR8v" required pattern="[0-9]+">
+
+<label>Aadhar</label>
+<input name="00Nfj000037OlUr" required pattern="[0-9]{12}">
+
+<label>PAN</label>
+<input name="00Nfj000037OYiw" required pattern="[A-Z]{5}[0-9]{4}[A-Z]">
+
+<label>Policy Type</label>
+<select name="00Nfj000037OKjC" required>
+<option value="">--Select--</option>
+<option>Health</option>
+<option>Vehicle</option>
+<option>Property</option>
+</select>
+
+<label>Tenure (Years)</label>
+<input name="00Nfj000037TBKJ" required pattern="[0-9]+">
+
+<input type="submit" value="Submit Query">
+</form>
+</div>
+</div>
+
+<!-- ================== WEB TO CASE ================== -->
+<div class="modal" id="caseModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('caseModal')">&times;</span>
+<h2>Claim Request Form</h2>
+
+<form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00Dfj00000JEsC5"
+method="POST">
+
+<input type="hidden" name="orgid" value="00Dfj00000JEsC5">
+<input type="hidden" name="retURL" value="https://agent-to-customer-or-claim.onrender.com/">
+
+<label>Policy Number</label>
+<input name="00Nfj000037aumt" required pattern="[A-Za-z0-9]{6,10}">
+
+<label>Claim Amount</label>
+<input name="00Nfj000037bfl0" required pattern="[0-9]+">
+
+<label>Claim Date</label>
+<input name="00Nfj000037bfrR" type="date" required>
+
+<label>Incident Date</label>
+<input name="00Nfj000037bUHi" type="date" required>
+
+<input type="submit" value="Submit Claim">
+</form>
+</div>
+</div>
+
+<script>
+function openModal(id){
+    document.getElementById(id).style.display='flex';
+}
+function closeModal(id){
+    document.getElementById(id).style.display='none';
+}
+</script>
 
 </body>
 </html>
