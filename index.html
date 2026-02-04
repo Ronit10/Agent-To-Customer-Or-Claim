@@ -396,7 +396,6 @@ method="POST">
   id="00Nfj000037bUHi"
   name="00Nfj000037bUHi"
   type="date"
-  max=""
   required>
 
 
@@ -415,15 +414,15 @@ function closeModal(id){
 
 const incidentDate = document.getElementById("00Nfj000037bUHi");
 
-incidentDate.addEventListener("change", function () {
-    const selectedDate = new Date(this.value);
-    const today = new Date();
-    today.setHours(0,0,0,0);
+// Block future dates
+incidentDate.max = new Date().toISOString().split("T")[0];
 
-    if (selectedDate > today) {
-        alert("Incident date cannot be in the future.");
-        this.value = "";
-    }
+// Force ISO format on submit (extra safety)
+incidentDate.form.addEventListener("submit", function () {
+  if (incidentDate.value) {
+    const d = new Date(incidentDate.value);
+    incidentDate.value = d.toISOString().split("T")[0];
+  }
 });
     
 </script>
