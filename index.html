@@ -370,16 +370,34 @@ method="POST">
 <input type="hidden" name="retURL" value="https://agent-to-customer-or-claim.onrender.com/">
 
 <label>Policy Number</label>
-<input name="00Nfj000037aumt" required pattern="[A-Za-z0-9]{6,10}">
+<input 
+  id="00Nfj000037aumt"
+  name="00Nfj000037aumt"
+  type="text"
+  value="Policy-"
+  maxlength="11"
+  pattern="Policy-[A-Za-z0-9]{4}"
+  title="Format: Policy-XXXX (4 characters only)"
+  oninput="
+    if(!this.value.startsWith('Policy-')){
+        this.value='Policy-';
+    }
+    if(this.value.length > 11){
+        this.value = this.value.slice(0,11);
+    }
+  "
+  required>
 
-<label>Claim Amount</label>
-<input name="00Nfj000037bfl0" required pattern="[0-9]+">
-
-<label>Claim Date</label>
-<input name="00Nfj000037bfrR" type="date" required>
-
+<label>Claim Amount Requested</label>
+<input id="00Nfj000037bfl0" name="00Nfj000037bfl0" type="text" required>
+    
 <label>Incident Date</label>
-<input name="00Nfj000037bUHi" type="date" required>
+<input 
+  id="00Nfj000037bUHi"
+  name="00Nfj000037bUHi"
+  type="date"
+  required>
+
 
 <input type="submit" value="Submit Claim">
 </form>
@@ -393,6 +411,20 @@ function openModal(id){
 function closeModal(id){
     document.getElementById(id).style.display='none';
 }
+
+const incidentDate = document.getElementById("00Nfj000037bUHi");
+
+incidentDate.addEventListener("change", function () {
+    const selectedDate = new Date(this.value);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    if (selectedDate > today) {
+        alert("Incident date cannot be in the future.");
+        this.value = "";
+    }
+});
+    
 </script>
 
 </body>
