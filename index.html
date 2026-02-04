@@ -392,11 +392,15 @@ method="POST">
 <input id="00Nfj000037bfl0" name="00Nfj000037bfl0" type="text" required>
     
 <label>Incident Date</label>
-<input 
+<input
+  type="text"
   id="00Nfj000037bUHi"
   name="00Nfj000037bUHi"
-  type="date"
-  required>
+  placeholder="MM/DD/YYYY"
+  pattern="^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/[0-9]{4}$"
+  title="Date must be in MM/DD/YYYY format"
+  required
+/>
 
 
 <input type="submit" value="Submit Claim">
@@ -412,16 +416,23 @@ function closeModal(id){
     document.getElementById(id).style.display='none';
 }
 
-const incidentDate = document.getElementById("00Nfj000037bUHi");
+const incident = document.getElementById("00Nfj000037bUHi");
 
-// Block future dates
-incidentDate.max = new Date().toISOString().split("T")[0];
+incident.addEventListener("blur", function () {
+  const parts = this.value.split("/");
+  if (parts.length !== 3) return;
 
-// Force ISO format on submit (extra safety)
-incidentDate.form.addEventListener("submit", function () {
-  if (incidentDate.value) {
-    const d = new Date(incidentDate.value);
-    incidentDate.value = d.toISOString().split("T")[0];
+  const mm = parseInt(parts[0], 10);
+  const dd = parseInt(parts[1], 10);
+  const yyyy = parseInt(parts[2], 10);
+
+  const selected = new Date(yyyy, mm - 1, dd);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  if (selected > today) {
+    alert("Incident date future nahi ho sakti");
+    this.value = "";
   }
 });
     
