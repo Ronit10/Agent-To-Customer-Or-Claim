@@ -299,21 +299,23 @@ method="POST">
 <input type="hidden" name="retURL" value="http://agent-to-customer-or-claim.onrender.com/">
 
 <label>First Name</label>
-<input name="first_name" required pattern="[A-Za-z ]{2,}">
+<input id="first_name" name="first_name" required pattern="[A-Za-z ]{2,}">
 
 <label>Last Name</label>
-<input name="last_name" required pattern="[A-Za-z ]{2,}">
+<input id="last_name" name="last_name" required pattern="[A-Za-z ]{2,}">
 
 <label>Email</label>
-<input name="email" type="email" required>
+<input id="email" name="email" type="email" required>
 
 <label>Phone</label>
 <input 
+  id="phone"
   name="phone"
   required
   placeholder="9876543210"
   pattern="^[1-9][0-9]{9}$"
   title="Phone number must be 10 digits and cannot start with 0">
+
 
 
 <label>Date of Birth</label>
