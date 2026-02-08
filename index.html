@@ -255,17 +255,30 @@ form input[type="submit"]:hover{
 
 <!-- ================= PRODUCTS ================= -->
 <div class="products">
-    <h2>Popular Insurance Products</h2>
-    <div class="product-grid">
-        <div class="product"><h4>Health Insurance</h4></div>
-        <div class="product"><h4>Car Insurance</h4></div>
-        <div class="product"><h4>Bike Insurance</h4></div>
-        <div class="product"><h4>Home Insurance</h4></div>
-        <div class="product"><h4>Travel Insurance</h4></div>
-        <div class="product"><h4>Term Life Insurance</h4></div>
-    </div>
+<h2>Popular Insurance Products</h2>
+<div class="product-grid">
+<div class="product" onclick="openProduct('health')"><h4>Health Insurance</h4></div>
+<div class="product" onclick="openProduct('vehicle')"><h4>Car Insurance</h4></div>
+<div class="product" onclick="openProduct('vehicle')"><h4>Bike Insurance</h4></div>
+<div class="product" onclick="openProduct('property')"><h4>Home Insurance</h4></div>
+<div class="product" onclick="openProduct('travel')"><h4>Travel Insurance</h4></div>
+<div class="product" onclick="openProduct('life')"><h4>Term Life Insurance</h4></div>
+</div>
 </div>
 
+<div class="modal" id="productModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('productModal')">&times;</span>
+<h2 id="productTitle"></h2>
+
+<div class="coverage-note" id="coverageNote"></div>
+
+<form>
+<div id="dynamicFields"></div>
+<input type="submit" value="Submit Details">
+</form>
+</div>
+</div>
 <!-- ================= YOUR ORIGINAL FEATURE ================= -->
 <div class="container">
 <header>
@@ -437,7 +450,72 @@ incident.addEventListener("blur", function () {
     this.value = "";
   }
 });
-    
+
+function openProduct(type){
+openModal('productModal');
+let title=document.getElementById('productTitle');
+let note=document.getElementById('coverageNote');
+let fields=document.getElementById('dynamicFields');
+
+fields.innerHTML='';
+
+if(type==='health'){
+title.innerText='Health Insurance Details';
+note.innerText='Coverage Range: ₹1,00,000 – ₹1,00,00,000';
+fields.innerHTML=`
+<label>Age</label><input type="number" required>
+<label>Medical History</label>
+<select required>
+<option>No Disease</option>
+<option>Diabetes</option>
+<option>Asthma</option>
+<option>Thyroid</option>
+<option>BP</option>
+<option>Heart Disease</option>
+<option>Cancer</option>
+</select>
+<label>Past Surgeries</label><input type="text">
+`;
+}
+
+if(type==='vehicle'){
+title.innerText='Vehicle Insurance Details';
+note.innerText='Coverage Range: ₹50,000 – ₹50,00,000';
+fields.innerHTML=`
+<label>Vehicle Number</label><input required>
+<label>Model Year</label><input type="number" required>
+`;
+}
+
+if(type==='property'){
+title.innerText='Property Insurance Details';
+note.innerText='Coverage Range: ₹5,00,000 – ₹10,00,00,000';
+fields.innerHTML=`
+<label>Market Value</label><input required>
+<label><input type="checkbox"> JDA Approved</label>
+`;
+}
+
+if(type==='travel'){
+title.innerText='Travel Insurance Details';
+note.innerText='Coverage Range: ₹50,000 – ₹1,00,00,000';
+fields.innerHTML=`
+<label>Destination Country</label><input required>
+<label>Travel Duration (Days)</label><input type="number" required>
+`;
+}
+
+if(type==='life'){
+title.innerText='Term Life Insurance Details';
+note.innerText='Coverage Range: ₹10,00,000 – ₹5,00,00,000';
+fields.innerHTML=`
+<label>Age</label><input type="number" required>
+<label>Annual Income</label><input required>
+<label>Smoker</label>
+<select><option>No</option><option>Yes</option></select>
+`;
+}
+}
 </script>
 
 </body>
