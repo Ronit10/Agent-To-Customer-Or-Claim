@@ -270,11 +270,21 @@ form input[type="submit"]:hover{
 <div class="modal-content">
 <span class="close" onclick="closeModal('productModal')">&times;</span>
 <h2 id="productTitle"></h2>
+<p id="coverageNote"></p>
 
 <div class="coverage-note" id="coverageNote"></div>
 
 <form>
 <div id="dynamicFields"></div>
+
+<div style="font-weight:600;margin-top:10px">
+Risk Score: <span id="riskScore">--</span>/100
+</div>
+
+<div style="font-weight:600;color:#0a5cff;margin-top:8px">
+Recommended Coverage: ₹ <span id="coverageAmount">--</span>
+</div>
+
 <input type="submit" value="Submit Details">
 </form>
 </div>
@@ -450,7 +460,63 @@ incident.addEventListener("blur", function () {
     this.value = "";
   }
 });
+function updateResult(risk, minCover, maxCover){
+    if(risk > 100) risk = 100;
 
+    const coverage =
+        Math.round(maxCover - (risk / 100) * (maxCover - minCover));
+
+    document.getElementById("riskScore").innerText = risk;
+    document.getElementById("coverageAmount").innerText =
+        coverage.toLocaleString("en-IN");
+}
+
+function healthRisk(){
+    let age = document.getElementById("healthAge").value || 0;
+    let disease = document.getElementById("healthDisease").value;
+
+    let risk = 10;
+    if(age > 45) risk += 25;
+    if(age > 60) risk += 40;
+    if(disease !== "No Disease") risk += 30;
+
+    updateResult(risk, 100000, 10000000);
+}
+
+function vehicleRisk(){
+    let year = document.getElementById("vehicleYear").value || 2024;
+    let currentYear = new Date().getFullYear();
+    let risk = (currentYear - year) * 5;
+
+    updateResult(risk, 50000, 5000000);
+}
+
+function propertyRisk(){
+    let value = document.getElementById("propertyValue").value || 0;
+    let jda = document.getElementById("jda")?.checked;
+
+    let risk = value > 5000000 ? 30 : 15;
+    if(!jda) risk += 20;
+
+    updateResult(risk, 500000, 100000000);
+}
+
+function travelRisk(){
+    let days = document.getElementById("travelDays").value || 0;
+    let risk = days > 30 ? 60 : days > 15 ? 40 : 20;
+
+    updateResult(risk, 50000, 10000000);
+}
+
+function lifeRisk(){
+    let age = document.getElementById("lifeAge").value || 0;
+    let smoker = document.getElementById("smoker").value;
+
+    let risk = age > 45 ? 30 : 15;
+    if(smoker === "Yes") risk += 40;
+
+    updateResult(risk, 1000000, 50000000);
+}
 function openProduct(type){
 openModal('productModal');
 let title=document.getElementById('productTitle');
